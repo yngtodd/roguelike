@@ -5,3 +5,5 @@ authors = ["yngtodd <young.todd.mk@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+tcod = { version = "0.12", features = ["serialization"] }
+rand = "0.3"
