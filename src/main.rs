@@ -46,16 +46,26 @@ fn main() {
         .size(SCREEN_HEIGHT, SCREEN_WIDTH)
         .title("Rust/libtocod tutorial")
         .init();
-
+    
     tcod::system::set_fps(LIMIT_FPS); 
+    let mut con = Offscreen::new(SCREEN_WIDTH, SCREEN_HEIGHT);
 
     let mut player_x = SCREEN_WIDTH / 2;
     let mut player_y = SCREEN_HEIGHT / 2;
 
     while !root.window_closed() {
-        root.set_default_foreground(colors::WHITE);
-        root.clear();
-        root.put_char(player_x, player_y, '@', BackgroundFlag::None);
+        con.set_default_foreground(colors::WHITE);
+        con.clear();
+        con.put_char(player_x, player_y, '@', BackgroundFlag::None);
+        blit(
+            &mut con, 
+            (0, 0),
+            (SCREEN_WIDTH, SCREEN_HEIGHT),
+            &mut root,
+            (0, 0),
+            1.0,
+            1.0
+        );
         root.flush();
 
         // Handle keys and exit if needed.
