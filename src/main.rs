@@ -9,7 +9,7 @@ const LIMIT_FPS: i32 = 20;
 
 fn main() {
     let mut root = Root::initializer()
-        .font("arial10x10.png", FontLayout::Tcod)
+        .font("assets/arial10x10.png", FontLayout::Tcod)
         .font_type(FontType::Greyscale)
         .size(SCREEN_HEIGHT, SCREEN_WIDTH)
         .title("Rust/libtocod tutorial")
