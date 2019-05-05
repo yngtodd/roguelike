@@ -5,5 +5,5 @@ authors = ["yngtodd <young.todd.mk@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-tcod = { version = "0.12", features = ["serialization"] }
+tcod = { git = "https://github.com/rjungemann/tcod-rs.git", branch = "fix-sdl2-rendering-mojave" }
 rand = "0.3"
