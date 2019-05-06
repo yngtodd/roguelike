@@ -1,5 +1,7 @@
 extern crate tcod;
 
+use std::cmp;
+
 use tcod::colors::{self, Color};
 use tcod::console::*;
 
@@ -89,6 +91,7 @@ fn make_map() -> Map {
 
     create_room(room1, &mut map);
     create_room(room2, &mut map);
+    create_h_tunnel(25, 55, 23, &mut map);
 
     map
 }
@@ -99,6 +102,12 @@ fn create_room(room: Rect, map: &mut Map) {
         for y in (room.y1 + 1)..room.y2 {
             map[x as usize][y as usize] = Tile::empty();
         }
+    }
+}
+
+fn create_h_tunnel(x1: i32, x2: i32, y: i32, map: &mut Map) {
+    for x in cmp::min(x1, x2)..cmp::max(x1, x2) {
+        map[x as usize][y as usize] = Tile::empty();
     }
 }
 
@@ -168,7 +177,7 @@ fn main() {
 
     let player = Object::new(25, 23, '@', colors::WHITE);
    
-    let npc = Object::new(SCREEN_WIDTH / 2 - 5, SCREEN_HEIGHT / 2, '@', colors::YELLOW);
+    let npc = Object::new(55, 23, '@', colors::YELLOW);
 
     let mut objects = [player, npc];
 
