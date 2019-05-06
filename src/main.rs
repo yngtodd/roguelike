@@ -314,7 +314,7 @@ fn main() {
     }
 
     // Prime the FOV with a player starter postion before game loop.
-    let mut previous_player_position = (-1, -1);
+    let previous_player_position = (-1, -1);
 
     while !root.window_closed() {
         // Clear the screen of the previous frame
