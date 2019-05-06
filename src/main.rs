@@ -22,16 +22,16 @@ type Map = Vec<Vec<Tile>>;
 #[derive(Clone, Copy, Debug)]
 struct Tile {
     blocked: bool,
-    blocked_sight: bool,
+    block_sight: bool,
 }
 
 impl Tile {
     pub fn empty() -> Self {
-        Tile { blocked: false, blocked_sight: false }
+        Tile { blocked: false, block_sight: false }
     }
 
     pub fn wall() -> Self {
-        Tile { blocked: true, blocked_sight: true }
+        Tile { blocked: true, block_sight: true }
     }
 }
 
@@ -46,14 +46,6 @@ struct Rect {
 impl Rect {
     pub fn new(x: i32, y: i32, w: i32, h: i32) -> Self {
         Rect { x1: x, y1: y, x2: x + w, y2: y + h }
-    }
-}
-
-fn create_room(room: Rect, map: &mut Map) {
-    for x in (room.x1 + 1)..room.x2 {
-        for y in (room.y1 + 1)..room.y1 {
-            map[x as usize][y as usize] = Tile::empty();
-        }
     }
 }
 
@@ -103,11 +95,20 @@ fn make_map() -> Map {
     map
 }
 
+fn create_room(room: Rect, map: &mut Map) {
+    // go through the tiles in the rectangle and make them passable
+    for x in (room.x1 + 1)..room.x2 {
+        for y in (room.y1 + 1)..room.y2 {
+            map[x as usize][y as usize] = Tile::empty();
+        }
+    }
+}
+
 fn render_all(root: &mut Root, con: &mut Offscreen, objects: &[Object], map: &Map) {
     // go through all tiles, and set their background color
     for y in 0..MAP_HEIGHT {
         for x in 0..MAP_WIDTH {
-            let wall = map[x as usize][y as usize].blocked_sight;
+            let wall = map[x as usize][y as usize].block_sight;
             if wall {
                 con.set_char_background(x, y, COLOR_DARK_WALL, BackgroundFlag::Set);
             } else {
@@ -160,12 +161,12 @@ fn main() {
     let mut root = Root::initializer()
         .font("assets/arial10x10.png", FontLayout::Tcod)
         .font_type(FontType::Greyscale)
-        .size(SCREEN_HEIGHT, SCREEN_WIDTH)
+        .size(SCREEN_WIDTH, SCREEN_HEIGHT)
         .title("Rust/libtocod tutorial")
         .init();
 
     tcod::system::set_fps(LIMIT_FPS);
-    let mut con = Offscreen::new(SCREEN_WIDTH, SCREEN_HEIGHT);
+    let mut con = Offscreen::new(MAP_WIDTH, MAP_HEIGHT);
 
     let player = Object::new(25, 23, '@', colors::WHITE);
    
