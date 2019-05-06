@@ -262,9 +262,9 @@ fn main() {
 
     let player = Object::new(player_x, player_y, '@', colors::WHITE);
 
-    let npc = Object::new(55, 23, '@', colors::GREEN);
+    //let npc = Object::new(55, 23, '@', colors::GREEN);
 
-    let mut objects = [player, npc];
+    let mut objects = [player];
 
     while !root.window_closed() {
         // Clear the screen of the previous frame
