@@ -51,6 +51,7 @@ type Map = Vec<Vec<Tile>>;
 struct Tile {
     blocked: bool,
     block_sight: bool,
+    explored: bool,
 }
 
 impl Tile {
@@ -58,6 +59,7 @@ impl Tile {
         Tile {
             blocked: false,
             block_sight: false,
+            explored: false,
         }
     }
 
@@ -65,6 +67,7 @@ impl Tile {
         Tile {
             blocked: true,
             block_sight: true,
+            explored: false,
         }
     }
 }
@@ -216,7 +219,7 @@ fn render_all(
     root: &mut Root,
     con: &mut Offscreen,
     objects: &[Object],
-    map: &Map,
+    map: &mut Map,
     fov_map: &mut FovMap,
     fov_recompute: bool,
 ) {
@@ -238,7 +241,18 @@ fn render_all(
                 (true, true) => COLOR_LIGHT_WALL,
                 (true, false) => COLOR_LIGHT_GROUND,
             };
-            con.set_char_background(x, y, color, BackgroundFlag::Set);
+
+            let explored = &mut map[x as usize][y as usize].explored;
+
+            if visible {
+                // Since it's visible, it has been explored
+                *explored = true;
+            }
+            
+            if *explored {
+                // Show explored tiles only.
+                con.set_char_background(x, y, color, BackgroundFlag::Set);
+            }
         }
     }
 
@@ -293,7 +307,7 @@ fn main() {
     tcod::system::set_fps(LIMIT_FPS);
     let mut con = Offscreen::new(MAP_WIDTH, MAP_HEIGHT);
 
-    let (map, (player_x, player_y)) = make_map();
+    let (mut map, (player_x, player_y)) = make_map();
 
     let player = Object::new(player_x, player_y, '@', colors::WHITE);
 
@@ -327,7 +341,7 @@ fn main() {
             &mut root,
             &mut con,
             &objects,
-            &map,
+            &mut map,
             &mut fov_map,
             fov_recompute,
         );
