@@ -17,7 +17,11 @@ const MAP_HEIGHT: i32 = 45;
 const LIMIT_FPS: i32 = 20;
 
 const COLOR_DARK_WALL: Color = Color { r: 38, g: 0, b: 77 };
-const COLOR_DARK_GROUND: Color = Color { r: 51, g: 0, b: 128 };
+const COLOR_DARK_GROUND: Color = Color {
+    r: 51,
+    g: 0,
+    b: 128,
+};
 
 type Map = Vec<Vec<Tile>>;
 
@@ -29,11 +33,17 @@ struct Tile {
 
 impl Tile {
     pub fn empty() -> Self {
-        Tile { blocked: false, block_sight: false }
+        Tile {
+            blocked: false,
+            block_sight: false,
+        }
     }
 
     pub fn wall() -> Self {
-        Tile { blocked: true, block_sight: true }
+        Tile {
+            blocked: true,
+            block_sight: true,
+        }
     }
 }
 
@@ -47,7 +57,12 @@ struct Rect {
 
 impl Rect {
     pub fn new(x: i32, y: i32, w: i32, h: i32) -> Self {
-        Rect { x1: x, y1: y, x2: x + w, y2: y + h }
+        Rect {
+            x1: x,
+            y1: y,
+            x2: x + w,
+            y2: y + h,
+        }
     }
 }
 
@@ -73,7 +88,7 @@ impl Object {
             // Move by a given amount
             self.x += dx;
             self.y += dy;
-        } 
+        }
     }
 
     pub fn draw(&self, con: &mut Console) {
@@ -176,12 +191,12 @@ fn main() {
     let mut con = Offscreen::new(MAP_WIDTH, MAP_HEIGHT);
 
     let player = Object::new(25, 23, '@', colors::WHITE);
-   
+
     let npc = Object::new(55, 23, '@', colors::GREEN);
 
     let mut objects = [player, npc];
 
-    let map = make_map();  
+    let map = make_map();
 
     while !root.window_closed() {
         // Clear the screen of the previous frame
