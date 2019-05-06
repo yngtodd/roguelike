@@ -71,9 +71,7 @@ impl Object {
             // Move by a given amount
             self.x += dx;
             self.y += dy;
-        } else {
-            println!("Movement is blocked!")
-        }
+        } 
     }
 
     pub fn draw(&self, con: &mut Console) {
