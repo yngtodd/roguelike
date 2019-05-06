@@ -16,8 +16,8 @@ const MAP_HEIGHT: i32 = 45;
 // Maximum number of frames per second
 const LIMIT_FPS: i32 = 20;
 
-const COLOR_DARK_WALL: Color = Color { r: 0, g: 0, b: 100 };
-const COLOR_DARK_GROUND: Color = Color { r: 50, g: 50, b: 150 };
+const COLOR_DARK_WALL: Color = Color { r: 38, g: 0, b: 77 };
+const COLOR_DARK_GROUND: Color = Color { r: 51, g: 0, b: 128 };
 
 type Map = Vec<Vec<Tile>>;
 
@@ -177,7 +177,7 @@ fn main() {
 
     let player = Object::new(25, 23, '@', colors::WHITE);
    
-    let npc = Object::new(55, 23, '@', colors::YELLOW);
+    let npc = Object::new(55, 23, '@', colors::GREEN);
 
     let mut objects = [player, npc];
 
